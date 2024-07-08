@@ -1,8 +1,9 @@
 name: Build and push multi-arch docker image
 
 on:
-  push:
-    tags: [v*]
+  workflow_dispatch: 
+  schedule:
+    - cron: '0 1 * * *'
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
