@@ -10,12 +10,15 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        architecture: [amd64, arm64]
     steps:
       - name: Get GitHub Release Tag
         id: get_tag
         run: |
           API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
-          browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "autMan_amd64.tar.gz").browser_download_url')
+          browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "autMan_" + $architecture + ".tar.gz").browser_download_url')
           TAG_NAME=$(echo "$API_RESPONSE" | jq -r '.tag_name')
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "browser_download_url=$browser_download_url" >> $GITHUB_ENV
@@ -32,11 +35,11 @@ jobs:
             exit 78
           fi
           
-      - name: download tar 
+      - name: Download tar for ${{ matrix.architecture }}
         run: |
-          curl -L -o autMan_amd64.tar.gz "$browser_download_url"
-          tar -zxvf autMan_amd64.tar.gz
-          rm -f autMan_amd64.tar.gz
+          curl -L -o autMan_${{ matrix.architecture }}.tar.gz "$browser_download_url"
+          tar -zxvf autMan_${{ matrix.architecture }}.tar.gz
+          rm -f autMan_${{ matrix.architecture }}.tar.gz
 
       - name: edit dockerfile
         run: |
@@ -50,7 +53,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set up QEMU
+      - name: Set up QEMU (for arm64)
+        if: ${{ matrix.architecture == 'arm64' }}
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
@@ -61,7 +65,7 @@ jobs:
           context: .
           push: true
           platforms: |
-            linux/amd64
+            linux/${{ matrix.architecture }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}
