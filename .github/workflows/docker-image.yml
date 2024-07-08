@@ -29,7 +29,7 @@ jobs:
 
       - name: Create manifest for multi-arch image
         run: |
-          docker manifest create ${{ secrets.DOCKERHUB_USERNAME }}/autman:latest \
+          docker manifest create ${{ env.DOCKERHUB_REPO }}:latest \
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-amd64 \
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-arm64
 
