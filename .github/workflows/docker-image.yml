@@ -29,6 +29,7 @@ jobs:
 
       - name: Create manifest for multi-arch image
         run: |
+          docker manifest rm ${{ env.DOCKERHUB_REPO }}:latest
           docker manifest create ${{ env.DOCKERHUB_REPO }}:latest \
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-amd64 \
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-arm64
