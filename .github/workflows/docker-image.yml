@@ -1,4 +1,4 @@
-name: Build and push multi-arch docker image
+name: Merge multi-arch docker image
 
 on:
   workflow_dispatch: 
