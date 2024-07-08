@@ -67,5 +67,4 @@ jobs:
           platforms: |
             linux/${{ matrix.architecture }}
           tags: |
-            ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}
+            ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-${{ matrix.architecture }}
