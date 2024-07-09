@@ -28,11 +28,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
       - name: Get Docker Image Digest
-         run: |
-           DIGEST_AMD^$=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-amd64)
-           echo "DIGEST_AMD=$DIGEST_AMD" >> $GITHUB_ENV
-           DIGEST_ARM^$=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-arm64)
-           echo "DIGEST_ARM=$DIGEST_ARM" >> $GITHUB_ENV
+        run: |
+          DIGEST_AMD^$=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-amd64)
+          echo "DIGEST_AMD=$DIGEST_AMD" >> $GITHUB_ENV
+          DIGEST_ARM^$=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-arm64)
+          echo "DIGEST_ARM=$DIGEST_ARM" >> $GITHUB_ENV
 
       - name: Create manifest for multi-arch image
         run: |
