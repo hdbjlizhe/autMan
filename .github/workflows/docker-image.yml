@@ -39,8 +39,8 @@ jobs:
           docker manifest create temp-manifest ${{ DIGEST_AMD }} ${{ DIGEST_ARM }}
       - name: Annotate
         run: |
-          docker manifest annotate temp-manifest ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-amd64 --os linux --arch amd64
-          docker manifest annotate temp-manifest ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-arm64 --os linux --arch arm64
+          docker manifest annotate temp-manifest ${{ DIGEST_AMD }} --os linux --arch amd64
+          docker manifest annotate temp-manifest ${{ DIGEST_ARM }} --os linux --arch arm64
 
       - name: Push manifest for multi-arch image
         run: |
