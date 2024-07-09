@@ -68,3 +68,4 @@ jobs:
             linux/${{ matrix.architecture }}
           tags: |
             ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-${{ matrix.architecture }}
+            ${{ env.DOCKERHUB_REPO }}:latest
