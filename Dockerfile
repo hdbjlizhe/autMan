@@ -35,6 +35,7 @@ RUN chmod a+x /bin/docker-entrypoint.sh \
 	&& apk add git \
   	&& apk add bash \
 	&& apk add ffmpeg \
+        && apk add google-chrome \
         && cd /app/autMan/plugin/scripts \
 	&& go get -u github.com/hdbjlizhe/middleware\
 	&& go get github.com/buger/jsonparser\
