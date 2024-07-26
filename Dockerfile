@@ -30,7 +30,6 @@ COPY ./docker-entrypoint.sh /bin/
 ENV GO111MODULE=on \
 	GOPROXY=https://goproxy.cn \
 	NODE_PATH=/usr/local/lib/node_modules
-        LANG=zh_CN.UTF-8
 
 RUN chmod a+x /bin/docker-entrypoint.sh \
 	&& apk add git \
