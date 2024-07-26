@@ -25,6 +25,7 @@ RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https:/
 
 ADD . /app/autMan/
 COPY ./docker-entrypoint.sh /bin/
+COPY ./MSYH.TTF /usr/share/fonts/MSYH.TTF
 
 #设置golang环境变量
 ENV GO111MODULE=on \
