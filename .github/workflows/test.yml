@@ -10,9 +10,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        architecture: [amd64, arm64]
+    # strategy:
+    #   matrix:
+    #     architecture: [amd64, arm64]
     steps:
       - name: Get GitHub Release Tag
         id: get_tag
@@ -35,11 +35,11 @@ jobs:
             exit 78
           fi
           
-      - name: Download tar for ${{ matrix.architecture }}
-        run: |
-          curl -L -o autMan_${{ matrix.architecture }}.tar.gz "$browser_download_url"
-          tar -zxvf autMan_${{ matrix.architecture }}.tar.gz
-          rm -f autMan_${{ matrix.architecture }}.tar.gz
+      # - name: Download tar for ${{ matrix.architecture }}
+      #   run: |
+      #     curl -L -o autMan_${{ matrix.architecture }}.tar.gz "$browser_download_url"
+      #     tar -zxvf autMan_${{ matrix.architecture }}.tar.gz
+      #     rm -f autMan_${{ matrix.architecture }}.tar.gz
 
       - name: edit dockerfile
         run: |
@@ -54,29 +54,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Set up QEMU (for arm64)
-        if: ${{ matrix.architecture == 'arm64' }}
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Build and push
-        if: ${{ matrix.architecture == 'amd64' }}
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
           platforms: |
-            linux/${{ matrix.architecture }}
+            linux/amd64
+            linux/arm64
           tags: |
-            ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-${{ matrix.architecture }}
+            ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}
             ${{ env.DOCKERHUB_REPO }}:latest
-      - name: Build and push
-        if: ${{ matrix.architecture == 'arm64' }}
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          platforms: |
-            linux/${{ matrix.architecture }}
-          tags: |
-            ${{ env.DOCKERHUB_REPO }}:${{ env.TAG_NAME }}-${{ matrix.architecture }}
