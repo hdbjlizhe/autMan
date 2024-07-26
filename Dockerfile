@@ -35,9 +35,9 @@ ENV GO111MODULE=on \
 RUN chmod a+x /bin/docker-entrypoint.sh \
 	&& apk add git \
   	&& apk add bash \
-	&& apk add ffmpeg \
-        && apk add chromium \
- #        && cd /app/autMan/plugin/scripts \
+	&& apk add ffmpeg
+        # && apk add chromium \
+ 	# && cd /app/autMan/plugin/scripts \
 	# && go get -u github.com/hdbjlizhe/middleware\
 	# && go get github.com/buger/jsonparser\
 	# && go get github.com/gin-gonic/gin\
