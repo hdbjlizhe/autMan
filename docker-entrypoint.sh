@@ -40,6 +40,7 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	go get github.com/buger/jsonparser
 	go get github.com/gin-gonic/gin
 	go get github.com/gin-contrib/sse
+        go get github.com/chromedp/chromedp
 else
  	echo "autMan 存在"
 fi
