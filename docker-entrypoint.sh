@@ -30,9 +30,9 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	echo "browser_download_url: $browser_download_url"
 	curl -L -o $ARCH "$browser_download_url"
 	echo "解压"
-    tar -zxvf $ARCH
+        tar -zxvf $ARCH
 	echo "删除压缩包"
-    rm -f $ARCH
+        rm -f $ARCH
 	echo "安装 golang依赖"
 	cp $CODE_DIR/plugin/golang/go.mod $CODE_DIR/plugin/scripts/
 	cd $CODE_DIR/plugin/scripts
