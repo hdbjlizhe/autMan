@@ -21,7 +21,7 @@ fi
 # 代码目录不存在则拷贝
 if [ ! -f $CODE_DIR/autMan ]; then
 	echo "autMan 不存在"
-        echo -e "=================== 如果第一次配置机器人，时间可能较长 ==================="
+        echo -e "=================== 第一次配置机器人，时间可能较长 ==================="
 	mkdir -p $CODE_DIR
 	cd $CODE_DIR
 	echo "下载 $ARCH"
