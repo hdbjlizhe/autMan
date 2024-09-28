@@ -3,6 +3,8 @@ FROM alpine:3.18
 WORKDIR /autMan
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
+	&& mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
+	&& ln -s /lib/libc.so.6 /usr/lib/libresolv.so.2 \
 	&& apk add --no-cache bash bash-doc bash-completion libaio libnsl libc6-compat tzdata \
         && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     	&& echo "Asia/Shanghai" > /etc/timezone
