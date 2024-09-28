@@ -1,11 +1,21 @@
-FROM ponycool/alpine-3.16:latest
+FROM alpine:latest
 
 WORKDIR /autMan
 
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
-	&& ln -s /lib/libc.so.6 /usr/lib/libresolv.so.2 \
-	&& apk add --no-cache libaio libnsl libc6-compat \
-	&& mkdir /app \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
+	&& apk add --no-cache bash bash-doc bash-completion libaio libnsl libc6-compat tzdata \
+        && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    	&& echo "Asia/Shanghai" > /etc/timezone
+# 安装中文语言包
+RUN apk add --no-cache ttf-dejavu && \
+    apk add --no-cache ca-certificates && \
+    apk add --no-cache locales && \
+    localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
+ 
+# 设置环境变量以支持中文
+ENV LANG zh_CN.UTF-8
+ENV LC_ALL zh_CN.UTF-8
+RUN mkdir /app \
 	&& cd /app \
 	&& apk update \
 	&& apk add curl \
