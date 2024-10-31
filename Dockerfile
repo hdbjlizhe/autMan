@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM alpine:latest
 
 WORKDIR /autMan
 
