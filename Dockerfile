@@ -7,8 +7,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
 	&& ln -s /lib/libc.so.6 /usr/lib/libresolv.so.2 \
 	&& apk add --no-cache bash bash-doc bash-completion libaio libnsl libc6-compat tzdata \
         && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    	&& echo "Asia/Shanghai" > /etc/timezone \
-        && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
+    	&& echo "Asia/Shanghai" > /etc/timezone
     
 RUN mkdir /app \
 	&& cd /app \
@@ -23,7 +22,8 @@ RUN mkdir /app \
 	&& apk add nodejs \
 	&& apk add npm \
 	&& apk add php php-cli php-fpm php-mysqli php-json php-openssl \
-	&& apk add icu-data-full
+	&& apk add icu-data-full \
+        && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
 
 RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
 	&&npm install pnpm axios request require crypto-js global-agent got@11 dotenv base-64 jquery node-rsa fs png-js cheerio MD5 md5 -g
