@@ -7,7 +7,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
 	&& ln -s /lib/libc.so.6 /usr/lib/libresolv.so.2 \
 	&& apk add --no-cache bash bash-doc bash-completion libaio libnsl libc6-compat tzdata \
         && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    	&& echo "Asia/Shanghai" > /etc/timezone
+    	&& echo "Asia/Shanghai" > /etc/timezone \
+        && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
     
 RUN mkdir /app \
 	&& cd /app \
