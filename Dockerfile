@@ -5,17 +5,9 @@ WORKDIR /autMan
 RUN mkdir /app \
 	&& cd /app \
 	&& apt update \
-	&& apt install curl \
-	&& apt install jq \
-	&& apt install wget \
-	&& apt install tar \
-	&& apt install python3 \
-	&& apt install go \
-	&& apt install py3-pip \
-	&& apt install nodejs \
-	&& apt install npm \
-	&& apt install php php-cli php-fpm php-mysqli php-json php-openssl \
-	&& apt install icu-data-full \
+	&& apt install -y curl jq wget tar python3 go py3-pip nodejs npm \
+	&& apt install -y php php-cli php-fpm php-mysqli php-json php-openssl \
+	&& apt install -y icu-data-full \
         && mv /usr/lib/python3.12/EXTERNALLY-MANAGED /usr/lib/python3.12/EXTERNALLY-MANAGED.bk
 
 RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
@@ -31,9 +23,6 @@ ENV GO111MODULE=on \
 	NODE_PATH=/usr/local/lib/node_modules
 
 RUN chmod a+x /bin/docker-entrypoint.sh \
-	&& apt install git \
-  	&& apt install bash \
-	&& apt install ffmpeg \
-        && apt install chromium
+	&& apt install -y git bash ffmpeg chromium
 
 ENTRYPOINT ["/bin/docker-entrypoint.sh"]
