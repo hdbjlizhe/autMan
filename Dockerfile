@@ -6,7 +6,7 @@ RUN mkdir /app \
 	&& cd /app \
 	&& apt update \
 	&& apt install -y curl jq wget tar python3 python3-pip nodejs npm golang \
-	&& apt install -y php php-cli php-fpm php-mysqli php-json php-openssl \
+	&& apt install -y php php-cli php-fpm php-mysqli php-json \
 	&& apt install -y icu-data-full \
         && mv /usr/lib/python3.12/EXTERNALLY-MANAGED /usr/lib/python3.12/EXTERNALLY-MANAGED.bk
 
