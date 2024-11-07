@@ -1,4 +1,4 @@
-FROM debian-slim:latest
+FROM debian:bullseye-slim
 
 WORKDIR /autMan
 
