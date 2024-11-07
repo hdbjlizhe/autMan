@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian-slim:latest
 
 WORKDIR /autMan
 
