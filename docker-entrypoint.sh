@@ -37,6 +37,7 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	echo "安装 golang依赖"
 	cp $CODE_DIR/plugin/golang/go.mod $CODE_DIR/plugin/scripts/
 	cd $CODE_DIR/plugin/scripts
+        go get -u github.com/beego/beego/v2@master
 	go get -u github.com/hdbjlizhe/middleware
 	go get github.com/buger/jsonparser
 	go get github.com/gin-gonic/gin
