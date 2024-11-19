@@ -6,6 +6,7 @@ RUN mkdir /app \
 	&& cd /app \
 	&& apt update \
 	&& apt install -y curl jq wget tar python3 python3-pip nodejs npm golang \
+        && curl https://pyenv.run | bash
 	&& apt install -y php php-cli php-fpm php-mysqli php-json \
         && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
 
