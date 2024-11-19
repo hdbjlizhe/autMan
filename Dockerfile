@@ -6,7 +6,6 @@ RUN mkdir /app \
 	&& cd /app \
 	&& apt update \
         && apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev git \
-        && timedatectl set-timezone Asia/Shanghai \
 	&& apt install -y curl jq wget tar python3 python3-pip nodejs npm golang \
 	&& apt install -y php php-cli php-fpm php-mysqli php-json \
         && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk \
