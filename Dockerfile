@@ -9,7 +9,7 @@ RUN mkdir /app \
         && timedatectl set-timezone Asia/Shanghai \
 	&& apt install -y curl jq wget tar python3 python3-pip nodejs npm golang \
 	&& apt install -y php php-cli php-fpm php-mysqli php-json \
-        && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
+        && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk \
 	&& curl https://pyenv.run | bash \
         && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc \
 	&& echo 'eval "$(pyenv init --path)"' >> ~/.bashrc \
