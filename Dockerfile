@@ -10,11 +10,10 @@ RUN mkdir /app \
 	&& apt install -y php php-cli php-fpm php-mysqli php-json \
         && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk \
 	&& curl https://pyenv.run | bash \
-        && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc \
-	&& echo 'eval "$(pyenv init --path)"' >> ~/.bashrc \
-	&& echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
-	&& echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc \
-	&& source ~/.bashrc
+        && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> /etc/profile \
+	&& echo 'eval "$(pyenv init --path)"' >> /etc/profile \
+	&& echo 'eval "$(pyenv init -)"' >> /etc/profile \
+	&& echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile \
  
 
 RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
