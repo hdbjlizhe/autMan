@@ -13,7 +13,7 @@ RUN mkdir /app \
         && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> /etc/profile \
 	&& echo 'eval "$(pyenv init --path)"' >> /etc/profile \
 	&& echo 'eval "$(pyenv init -)"' >> /etc/profile \
-	&& echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile \
+	&& echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile
  
 
 RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
