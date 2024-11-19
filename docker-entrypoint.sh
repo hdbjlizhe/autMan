@@ -43,8 +43,10 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	go get github.com/gin-gonic/gin
 	go get github.com/gin-contrib/sse
         go get github.com/chromedp/chromedp
+	source /etc/profile
 else
  	echo "autMan 存在"
+        source /etc/profile
 fi
 
 # 进入代码目录
