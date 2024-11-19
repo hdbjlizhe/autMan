@@ -8,9 +8,15 @@ RUN mkdir /app \
         && apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev git
         && timedatectl set-timezone Asia/Shanghai \
 	&& apt install -y curl jq wget tar python3 python3-pip nodejs npm golang \
-        && curl https://pyenv.run | bash \
 	&& apt install -y php php-cli php-fpm php-mysqli php-json \
         && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
+	&& curl https://pyenv.run | bash \
+        && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc \
+	&& echo 'eval "$(pyenv init --path)"' >> ~/.bashrc \
+	&& echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
+	&& echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc \
+	&& source ~/.bashrc
+ 
 
 RUN pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
 	&&npm install pnpm axios request require crypto-js global-agent got@11 dotenv base-64 jquery node-rsa fs png-js cheerio MD5 md5 -g
