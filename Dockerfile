@@ -26,9 +26,6 @@ RUN wget https://golang.org/dl/go1.23.3.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.23.3.linux-amd64.tar.gz \
     && rm go1.23.3.linux-amd64.tar.gz
 
-# 设置 Go 环境变量
-
-
 # 运行 source /etc/profile 并安装 Python 包和 Node.js 包
 RUN source /etc/profile \
     && pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
