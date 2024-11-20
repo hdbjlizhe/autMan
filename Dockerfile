@@ -27,7 +27,7 @@ RUN wget https://golang.org/dl/go1.23.3.linux-amd64.tar.gz \
     && rm go1.23.3.linux-amd64.tar.gz
 
 # 设置 Go 环境变量
-ENV PATH="/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/go/bin:$PATH"
+
 
 # 运行 source /etc/profile 并安装 Python 包和 Node.js 包
 RUN source /etc/profile \
@@ -40,7 +40,8 @@ COPY ./docker-entrypoint.sh /bin/
 COPY ./MSYH.TTF /usr/share/fonts/MSYH.TTF
 
 # 设置 golang 环境变量
-ENV GO111MODULE=on \
+ENV PATH="/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/go/bin:$PATH" \
+    GO111MODULE=on \
     GOPROXY=https://goproxy.cn \
     NODE_PATH=/usr/local/lib/node_modules
 
