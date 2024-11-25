@@ -1,57 +1,58 @@
-#!/bin/sh
+FROM debian:bookworm-slim
 
-# 代码目录
-if [ -z $CODE_DIR ]; then
-	CODE_DIR=/autMan
-fi
+WORKDIR /autMan
 
-# 获取当前系统架构
-ARCH=$(uname -m)
+# 安装依赖项
+RUN mkdir /app \
+	&& cd /app \
+	&& apt update \
+    && apt install -y wget tar tzdata ntp \
+    && apt clean \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev git \
+    && apt install -y curl jq wget tar python3 python3-pip nodejs npm \
+    && apt install -y php php-cli php-fpm php-mysqli php-json \
+    && mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk
 
-# 如果构架为arm64，则使用arm64架构
-if [ $ARCH = "x86_64" ]; then
-	ARCH="autMan_amd64.tar.gz"
-elif [ $ARCH = "aarch64" ]; then
-	ARCH="autMan_arm64.tar.gz"
-else
-	echo "不支持的架构"
-	exit 1
-fi
+# 安装 pyenv 并配置环境变量
+RUN curl https://pyenv.run | bash \
+    && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> /etc/profile \
+    && echo 'eval "$(pyenv init --path)"' >> /etc/profile \
+    && echo 'eval "$(pyenv init -)"' >> /etc/profile \
+    && echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile
 
-# 代码目录不存在则拷贝
-if [ ! -f $CODE_DIR/autMan ]; then
-	echo "autMan 不存在"
-        echo -e "=================== 第一次配置机器人，时间可能较长 ==================="
-	mkdir -p $CODE_DIR
-	cd $CODE_DIR
-	echo "下载 $ARCH"
-	API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
-	echo "API_RESPONSE: $API_RESPONSE"
-	browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "'$ARCH'").browser_download_url')
-	echo "browser_download_url: $browser_download_url"
-	curl -L -o $ARCH "$browser_download_url"
-	echo "解压"
-        tar -zxvf $ARCH
-	echo "删除压缩包"
-        rm -f $ARCH
-	echo "安装 golang依赖"
-	cp $CODE_DIR/plugin/golang/go.mod $CODE_DIR/plugin/scripts/
-	cd $CODE_DIR/plugin/scripts
-        go get -u github.com/beego/beego/v2@master
-	go get -u github.com/hdbjlizhe/middleware
-	go get github.com/buger/jsonparser
-	go get github.com/gin-gonic/gin
-	go get github.com/gin-contrib/sse
-        go get github.com/chromedp/chromedp
-	source /etc/profile
-else
- 	echo "autMan 存在"
-        source /etc/profile
-fi
+# 使用 SHELL 指令来改变默认的 shell
+SHELL ["/bin/bash", "-c"]
 
-# 进入代码目录
-chmod 777 $CODE_DIR
-cd $CODE_DIR 
-echo "启动"
-	chmod 777 autMan
-	./autMan
+# 安装 Go 1.23.3
+RUN wget https://golang.org/dl/go1.23.3.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go1.23.3.linux-amd64.tar.gz \
+    && rm go1.23.3.linux-amd64.tar.gz
+
+# 设置 Go 环境变量
+ENV PATH="/usr/local/go/bin:$PATH"
+
+# 运行 source /etc/profile 并安装 Python 包和 Node.js 包
+RUN source /etc/profile \
+    && pip3 install requests PyExecJS aiohttp bs4 sseclient-py sseclient -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    && npm install pnpm axios request require crypto-js global-agent got@11 dotenv base-64 jquery node-rsa fs png-js cheerio MD5 md5 -g
+
+# 添加应用程序文件
+ADD . /app/autMan/
+COPY ./docker-entrypoint.sh /bin/
+COPY ./MSYH.TTF /usr/share/fonts/MSYH.TTF
+
+# 设置 golang 环境变量
+ENV GO111MODULE=on \
+    GOPROXY=https://goproxy.cn \
+    NODE_PATH=/usr/local/lib/node_modules
+
+# 设置入口点脚本的执行权限
+RUN chmod a+x /bin/docker-entrypoint.sh \
+    && apt install -y ffmpeg chromium
+
+# 启用ntp服务
+RUN systemctl enable ntp
+
+ENTRYPOINT ["/bin/docker-entrypoint.sh"]
