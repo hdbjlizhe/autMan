@@ -26,7 +26,7 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	echo "下载 $ARCH"
 	API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
 	echo "API_RESPONSE: $API_RESPONSE"
-	browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name | contains('$ARCH')).browser_download_url')
+	browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "'$ARCH'").browser_download_url')
 	echo "browser_download_url: $browser_download_url"
 	curl -L -o $ARCH "$browser_download_url"
 	echo "解压"
