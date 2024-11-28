@@ -27,11 +27,13 @@ if [ ! -f $CODE_DIR/autMan ]; then
 	API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
 	echo "API_RESPONSE: $API_RESPONSE"
 
- 	# 预处理 JSON 字符串，去除控制字符
+	# 预处理 JSON 字符串，去除控制字符
     	CLEAN_API_RESPONSE=$(echo "$API_RESPONSE" | tr -d '\n\r\t')
     	echo "CLEAN_API_RESPONSE: $CLEAN_API_RESPONSE"
-	browser_download_url=$(echo "$CLEAN_API_RESPONSE" | jq -r '.assets[] | select(.name | contains('$ARCH')).browser_download_url')
+
+	browser_download_url=$(echo "$CLEAN_API_RESPONSE" | jq -r '.assets[] | select(.name == "'$ARCH'").browser_download_url')
 	echo "browser_download_url: $browser_download_url"
+ 
 	curl -L -o $ARCH "$browser_download_url"
 	echo "解压"
     tar -zxvf $ARCH
