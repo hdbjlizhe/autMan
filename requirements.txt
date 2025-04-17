@@ -1,0 +1,6 @@
+requests
+PyExecJS
+aiohttp
+bs4
+sseclient-py
+sseclient
