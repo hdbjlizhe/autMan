@@ -63,8 +63,8 @@ ENV PATH="/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/go/bin:$PATH" \
     PYTHONIOENCODING=UTF-8
 
 # 安全加固（使用非root用户）🔥
-RUN useradd -m autman \
-    && chown -R autman:autman /app /autMan
-USER autman
+# RUN useradd -m autman \
+#     && chown -R autman:autman /app /autMan
+# USER autman
 
 ENTRYPOINT ["/bin/docker-entrypoint.sh"]
