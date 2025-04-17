@@ -46,6 +46,8 @@ jobs:
           curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/Dockerfile
           curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/docker-entrypoint.sh
           curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/MSYH.TTF
+          curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/requirements.txt
+          curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/package.json
       #    curl -O https://raw.githubusercontent.com/hdbjlizhe/autMan/master/plugin/scripts/go.mod -o ./plugin/scripts
       #    ls 
       # - name: download go.mod
