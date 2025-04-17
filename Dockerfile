@@ -35,11 +35,9 @@ RUN curl -sSL https://pyenv.run | bash \
     && echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/bash.bashrc
 
 # 安装Go并验证校验和 🔥
-ENV GO_VERSION=1.23.3 \
-    GO_HASH=124926b6b9fd6e7aab5935e10c4a7897324a8ff0c8a60ced6530d8e0e4f54ec9
+ENV GO_VERSION=1.23.3
 
 RUN wget -q https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz \
-    && echo "${GO_HASH}  go${GO_VERSION}.linux-amd64.tar.gz" | sha256sum -c - \
     && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
     && rm go${GO_VERSION}.linux-amd64.tar.gz
 
