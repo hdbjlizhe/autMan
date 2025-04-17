@@ -44,7 +44,7 @@ RUN wget -q https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz \
 # 安装Python/Node依赖（使用缓存优化层）🔥
 COPY requirements.txt package.json /tmp/
 RUN pip3 install --no-cache-dir -r /tmp/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && npm install -g --omit=optional --no-fund --no-audit $(cat /tmp/package.json) \
+    && npm install -g --omit=optional --no-fund --no-audit $(jq -r '.dependencies | keys[]' /tmp/package.json) \
     && rm /tmp/requirements.txt /tmp/package.json
 
 # 添加应用程序文件（使用明确的COPY并设置权限）🔥
