@@ -14,7 +14,7 @@ RUN mkdir -p /app \
         libbz2-dev libreadline-dev libsqlite3-dev \
         wget curl llvm libncurses5-dev libncursesw5-dev \
         xz-utils tk-dev libffi-dev liblzma-dev git \
-        jq tar python3 python3-pip nodejs npm \
+        jq shc tar python3 python3-pip nodejs npm \
         php php-cli php-fpm php-mysqli php-json \
         tzdata ca-certificates \
         ffmpeg chromium fonts-wqy-zenhei \
