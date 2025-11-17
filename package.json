@@ -11,6 +11,7 @@
     "node-rsa": "^1.1.1",
     "png-js": "^1.0.0",
     "cheerio": "^1.0.0",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "javascript-obfuscator":"^4.0.0"
   }
 }
