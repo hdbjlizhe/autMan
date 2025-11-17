@@ -4,3 +4,4 @@ aiohttp
 bs4
 sseclient-py
 sseclient
+pyarmor
